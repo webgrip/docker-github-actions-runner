@@ -9,9 +9,8 @@ metadata:
   labels:
     tier: "2"
   annotations:
-    github.com/project-slug: https://github.com/webgrip/docker-github-actions-runner
+    github.com/project-slug: webgrip/docker-github-actions-runner
     backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/name=webhook-initializer'
   tags:
     - ci
     - automation
@@ -29,3 +28,28 @@ spec:
   lifecycle: production
   owner: group:webgrip/infrastructure
   system: ci-system
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: ci-system
+  namespace: webgrip
+  title: CI/CD System
+  description: |
+    The CI system runs continuous integration pipelines.
+  labels:
+    tier: "2"
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - ci
+    - automation
+  links:
+    - url: https://github.com/webgrip/docker-github-actions-runner
+      title: Runner Source Code
+      icon: github
+      type: source
+spec:
+  owner: group:webgrip/infrastructure
+  domain: webgrip/operations-domain
+  type: infrastructure

@@ -7,7 +7,6 @@ on:
       - goss*
     branches:
       - master
-      - develop
   schedule:
     - cron:  '0 22 * * *'
   workflow_dispatch:
@@ -147,7 +146,7 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USER }}
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Retry build and push
         uses: nick-fields/retry@v3
@@ -185,7 +184,7 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USER }}
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Retry build and push
         uses: nick-fields/retry@v3
@@ -223,7 +222,7 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USER }}
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Retry build and push
         uses: nick-fields/retry@v3
