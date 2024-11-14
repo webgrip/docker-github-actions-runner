@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -53,17 +53,22 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v5
+      - name: Retry build and push
+        uses: nick-fields/retry@v3
         with:
-          context: .
-          file: Dockerfile
-          pull: true
-          push: true
-          tags: ${{ env.ORG }}/github-runner:${{ env.TAG }},ghcr.io/${{ github.repository }}:${{ env.TAG }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          timeout_minutes: 60
+          max_attempts: 3
+          command: |
+            docker buildx build \
+              --file Dockerfile \
+              --platform linux/amd64,linux/arm64 \
+              --tag ${{ env.ORG }}/github-runner:${{ env.TAG }} \
+              --tag ghcr.io/${{ github.repository }}:${{ env.TAG }} \
+              --push \
+              --pull \
+              --cache-from type=gha \
+              --cache-to type=gha,mode=max \
+              .
 
   ubuntu_tag:
     runs-on: ubuntu-latest
@@ -96,23 +101,27 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v5
+      - name: Retry build and push
+        uses: nick-fields/retry@v3
         with:
-          context: .
-          file: Dockerfile.ubuntu-${{ matrix.release }}
-          pull: true
-          push: true
-          tags: ${{ env.ORG }}/github-runner:${{ env.TAG }}-ubuntu-${{ matrix.release }},ghcr.io/${{ github.repository }}:${{ env.TAG }}-ubuntu-${{ matrix.release }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
+          timeout_minutes: 60
+          max_attempts: 3
+          command: |
+            docker buildx build \
+              --file Dockerfile.ubuntu-${{ matrix.release }} \
+              --platform linux/amd64,linux/arm64 \
+              --tag ${{ env.ORG }}/github-runner:${{ env.TAG }}-ubuntu-${{ matrix.release }} \
+              --tag ghcr.io/${{ github.repository }}:${{ env.TAG }}-ubuntu-${{ matrix.release }} \
+              --push \
+              --pull \
+              --cache-from type=gha \
+              --cache-to type=gha,mode=max \
+              .
   debian_tag:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        release: [bullseye, sid]
+        release: [bookworm, sid]
       fail-fast: false
     needs: create-release
     steps:
@@ -139,14 +148,19 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v5
+      - name: Retry build and push
+        uses: nick-fields/retry@v3
         with:
-          context: .
-          file: Dockerfile.debian-${{ matrix.release }}
-          pull: true
-          push: true
-          tags: ${{ env.ORG }}/github-runner:${{ env.TAG }}-debian-${{ matrix.release }},ghcr.io/${{ github.repository }}:${{ env.TAG }}-debian-${{ matrix.release }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          timeout_minutes: 60
+          max_attempts: 3
+          command: |
+            docker buildx build \
+              --file Dockerfile.debian-${{ matrix.release }} \
+              --platform linux/amd64,linux/arm64 \
+              --tag ${{ env.ORG }}/github-runner:${{ env.TAG }}-debian-${{ matrix.release }} \
+              --tag ghcr.io/${{ github.repository }}:${{ env.TAG }}-debian-${{ matrix.release }} \
+              --push \
+              --pull \
+              --cache-from type=gha \
+              --cache-to type=gha,mode=max \
+              .
