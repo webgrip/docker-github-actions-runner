@@ -6,7 +6,6 @@ on:
       - .github/workflows/base.yml
     branches:
       - master
-      - develop
   schedule:
     - cron:  '0 22 * * *'
   workflow_dispatch:
