@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   ubuntu_latest_deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Copy Repo Files
         uses: actions/checkout@master
@@ -52,7 +52,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   ubuntu_deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         release: [jammy, focal, noble]
@@ -92,7 +92,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   debian_deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         release: [bullseye, sid]
