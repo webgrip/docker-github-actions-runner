@@ -11,6 +11,7 @@ metadata:
   annotations:
     github.com/project-slug: webgrip/docker-github-actions-runner
     backstage.io/techdocs-ref: dir:.
+    simpleicons.org/icon-slug: streamrunners
   tags:
     - ci
     - automation
@@ -41,6 +42,7 @@ metadata:
     tier: "2"
   annotations:
     backstage.io/techdocs-ref: dir:.
+    simpleicons.org/icon-slug: githubactions
   tags:
     - ci
     - automation
