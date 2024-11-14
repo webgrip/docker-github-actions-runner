@@ -11,7 +11,6 @@ metadata:
   annotations:
     github.com/project-slug: webgrip/docker-github-actions-runner
     backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/name=webhook-initializer'
   tags:
     - ci
     - automation
@@ -46,10 +45,10 @@ metadata:
     - ci
     - automation
   links:
-    - url: https://monitoring-platform.test
-      title: Development URL
-      icon: dashboard
-      type: website
+    - url: https://github.com/webgrip/docker-github-actions-runner
+      title: Runner Source Code
+      icon: github
+      type: source
 spec:
   owner: group:webgrip/infrastructure
   domain: webgrip/operations-domain
