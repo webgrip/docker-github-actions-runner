@@ -1,5 +1,5 @@
 # hadolint ignore=DL3007
-FROM myoung34/github-runner-base:latest
+FROM myoung34/github-runner-base:latest@sha256:0855d3e9eb03dd32b98588b4291c4a9b84f3ffcc2e5dea8ea46569e23fb5f075
 LABEL maintainer="myoung34@my.apsu.edu"
 
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
