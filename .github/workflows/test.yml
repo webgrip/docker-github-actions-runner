@@ -52,7 +52,7 @@ jobs:
           # Sanity check
           grep FROM Dockerfile.final.ubuntu-${{ matrix.release }}
       - name: Retry build final image
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 60
           max_attempts: 3
@@ -67,7 +67,7 @@ jobs:
               .
       # Tests will run against the final `${GH_RUNNER_IMAGE}` laid on top of `base-${GH_RUNNER_IMAGE}`
       - name: Run goss tests
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 60
           max_attempts: 3
@@ -141,7 +141,7 @@ jobs:
           # Sanity check
           grep FROM Dockerfile.final.debian-${{ matrix.release }}
       - name: Retry build final image
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 60
           max_attempts: 3
@@ -156,7 +156,7 @@ jobs:
               .
       # Tests will run against the final `${GH_RUNNER_IMAGE}` laid on top of `base-${GH_RUNNER_IMAGE}`
       - name: Run goss tests
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 60
           max_attempts: 3
